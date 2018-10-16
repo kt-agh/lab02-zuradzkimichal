@@ -3,37 +3,37 @@
 
 Git to system kontroli wersji stworzony przez Linusa Torvaldsa - twórcę jądra systemu linux. System kontroli wersji służy do kontroli zmian - najczęściej kodu. 
 
->>Proszę sobie wyobrazić następującą sytuację. Alicja tworzy zdanie `Ala ma kta`. W ramach wspólnej pracy jednocześnie Bob i Charlie chcą poprawić to zdanie. Bob poprawia na `Ala ma kota` zaś Charlie na `Ala ma tygrysa szablozębnego`. Pojawia sie problem organizacyny - które zdanie jest tym poprawnym? Kto wprowadził zmiany, jakie, kiedy i dla czego?
+>>Proszę sobie wyobrazić następującą sytuację. Alicja tworzy zdanie `Ala ma kta`. W ramach wspólnej pracy jednocześnie Bob i Charlie chcą poprawić to zdanie. Bob poprawia na `Ala ma kota` zaś Charlie na `Ala ma tygrysa szablozębnego`. Pojawia sie problem organizacyjny - które zdanie jest tym poprawnym? Kto wprowadził zmiany, jakie, kiedy i dla czego?
 
-System kontroli wersji pozwala opanować takie sytuacje - a także znacznie bardziej skomplikowane, występujący przy wspólnej pracy nad kodem (lub tekstem, jak w przypadku tych instrukcji). 
+System kontroli wersji pozwala opanować takie sytuacje - a także znacznie bardziej skomplikowane, występujący przy wspólnej pracy nad kodem (lub tekstem, jak w przypadku tych instrukcji).
 
 Stosowanie systemów kontroli wersji niesie ze sobą pewne wymagania. Krzywa uczenia (trudność) gita jest dość stroma - pewne aspekty nie są całkowicie intuicyjne, szczególnie jeśli nie zrozumie się istoty repozytorium rozproszonego. Git słabo nadaje się do przechowywania plików binarnych (programów). Ze względu na przechowywanie kompletu historii plików repozytorium git może zajmować bardzo dużo miejsca na dysku. Przykładowo - w chwili pisania tej instrukcji pliki aktualne zajmują 1,7MB, zaś całe repozytorium lokalne - aż 5MB. 
 
-Aby zacząć używać gita należy go zainstalować. Jest to aplikacja wieloplatformowa działająca bardzo dobrze za równo pod Windowsem jak i w systemach linuxowych. Także środowiska programistyczne potrafią integrować się z gitem. W trakcie tego przedmiotu polecamy jednak używanie gita z linii poleceń - pozwala to na utrawlenie poleceń i dobrą obserwację działań na repozytorium. Git dla Windows można pobrać [tutaj](https://git-scm.com/download/win) zaś git dla Ubuntu można zainstalować poleceniem `sudo apt-get install git`.
+Aby zacząć używać gita należy go zainstalować. Jest to aplikacja wieloplatformowa działająca bardzo dobrze za równo pod Windowsem jak i w systemach linuxowych. Także środowiska programistyczne potrafią integrować się z gitem. W trakcie tego przedmiotu polecamy jednak używanie gita z linii poleceń - pozwala to na utrwalenie poleceń i dobrą obserwację działań na repozytorium. Git dla Windows można pobrać [tutaj](https://git-scm.com/download/win) zaś git dla Ubuntu można zainstalować poleceniem `sudo apt-get install git`.
 
 Pierwszym krokiem jest konfiguracja - należy skonfigurować swojego maila i nazwę użytkownika poleceniami `git config --global user.name “Imię Nazwisko”` oraz `git config --global user.email nazwisko@imie.com`. Pomocne może być też także `git config --global push.default simple` - konfiguruje metodę wysyłania danych do repozytorium zdalnego oraz `git config --global credential.helper "cache --timeout=3600"` które sprawi, że dane logowania będą pamiętane przez 3600 sekund.
 
 >> Uwaga - ze względu na szczególną konfigurację maszyny w laboratorium mogą nie pamiętać konfiguracji i wymagać każdorazowego podawania konfiguracji. Ambitni (i leniwi) mogą sobie napisać skrypt w bashu ;)
 
-Git jest ropzroszonym systemem wersjonowania. Oznacza to, że każdy (także nasz) węzeł posiada pełną kopię repozytorium - wszystkie dane są przechowywane loklanie w każdym z węzłów. Uświadomienie sobie tego, że w systeie git nie ma centralnego, uprzywilejowanego serwera zdecydowanie ułatwia zrozumienie istoty tego rozwiązania. Workflow pracy z git przedstawia poniższy rysunek:
+Git jest rozproszonym systemem wersjonowania. Oznacza to, że każdy (także nasz) węzeł posiada pełną kopię repozytorium - wszystkie dane są przechowywane lokalnie w każdym z węzłów. Uświadomienie sobie tego, że w systemie git nie ma centralnego, uprzywilejowanego serwera zdecydowanie ułatwia zrozumienie istoty tego rozwiązania. Workflow pracy z git przedstawia poniższy rysunek:
 
-![alt text](./img/git1.PNG "Title")
+![alt text](./img/git1.png "Title")
 
-`Workspace` to nasza przestrzeń pracy, czyli pliki, z którymi aktualnie pracujemy. `index` to pliki, kótre chcemy wersjonować. `local repository` to dane, które mamy w swoim lokalnym repozytorium, zaś `remote repository` to zdalne repozytorium, najczęściej używane do wymiany danych z innymi. Strzałki reprezentują polecenia służace do przenoszenia danych między poszczególnymi przestrzeniami. 
+`Workspace` to nasza przestrzeń pracy, czyli pliki, z którymi aktualnie pracujemy. `index` to pliki, które chcemy wersjonować. `local repository` to dane, które mamy w swoim lokalnym repozytorium, zaś `remote repository` to zdalne repozytorium, najczęściej używane do wymiany danych z innymi. Strzałki reprezentują polecenia służące do przenoszenia danych między poszczególnymi przestrzeniami.
 
 Poza dostępem przy użyciu klienta git wiele rozwiązań oferuje interfejs WWW pozwalający na przeglądanie repozytorium. 
 
-Aby rozpocząć pracę z zainstalowanym gitem należy albo zainincjować lokalne repozytorium albo sklonowac już istniejące repozytorium polceniem `git clone <url>`. URL repozytorium można znaleźć logując się do gitlaba przez przeglądarkę. 
+Aby rozpocząć pracę z zainstalowanym gitem należy albo zainicjować lokalne repozytorium albo sklonować już istniejące repozytorium poleceniem `git clone <url>`. URL repozytorium można znaleźć logując się do gita przez przeglądarkę. 
 
-Przed rozpoczęciem pracy nalezy sprawdzić, czy ktoś ze współpracowników nie zmienił czegoś w kodzie (albo czy my nie zaktualizowaliśmy treści instrukcji). Można to zrobić poleceniami `git fetch` (pobrane zostaną dane ze zdalengo repozytorium) a potem `git status` (workspace zostanie porównany z lokalnym, już odświeżonym repozytorium). Jeżeli są róznice - należy zrobić `git pull` by zaktualizować swój workspace. 
+Przed rozpoczęciem pracy należy sprawdzić, czy ktoś ze współpracowników nie zmienił czegoś w kodzie (albo czy my nie zaktualizowaliśmy treści instrukcji). Można to zrobić poleceniami `git fetch` (pobrane zostaną dane ze zdalnego repozytorium) a potem `git status` (workspace zostanie porównany z lokalnym, już odświeżonym repozytorium). Jeżeli są różnice - należy zrobić `git pull` by zaktualizować swój workspace. 
 
-Każdy nowy plik należy dodać do indeksu (`git add <nazwa pliku>`). Prościej `git add .` doda nowe pliki i usunie usunięte z indeksu. Dodany plik można commitować (`git commit` - uwaga - włączy się edytor vi w którym jesteśmy zobowiązani do podania komentarza do zmiany, commit nastąpi dopiero po wpisaniu komentarza i zamknięciu edytora) a następnie wysłać do zdalnego repozytorium (`git push`). Alternatywą do `git commit` jest `git commit -am <"komentarz">`. Takie polecenie commituje wszystkie pliki i od razu dodaje komentrza do commita. Komentarze nie powinny być dłuższe jak 3-4 słowa, by dobrze formatowały się w historii.  
+Każdy nowy plik należy dodać do indeksu (`git add <nazwa pliku>`). Prościej `git add .` doda nowe pliki i usunie usunięte z indeksu. Dodany plik można commitować (`git commit` - uwaga - włączy się edytor vi w którym jesteśmy zobowiązani do podania komentarza do zmiany, commit nastąpi dopiero po wpisaniu komentarza i zamknięciu edytora) a następnie wysłać do zdalnego repozytorium (`git push`). Alternatywą do `git commit` jest `git commit -am <"komentarz">`. Takie polecenie commituje wszystkie pliki i od razu dodaje komentarz do commita. Komentarze nie powinny być dłuższe jak 3-4 słowa, by dobrze formatowały się w historii.  
 
 **Zadania**:
 
 1. Zaloguj się przez przeglądarkę do swojego repozytorium git
 1. Skonfiguruj git na swoim komputerze
-1. Sklonuj swoje repozytorium lokalnie, w wybranym katalogu (da to od razu dostęp do instrukcji!)
+1. Sklonuj repozytorium `lab02` lokalnie, w wybranym katalogu (da to od razu dostęp do instrukcji!)
 1. Utwórz lokalnie plik zawierający jedną linię `1:Ala ma kota`
 1. Sprawdź status swojego repozytorium
 1. Dodaj ten plik do lokalnego repozytorium i commituj
